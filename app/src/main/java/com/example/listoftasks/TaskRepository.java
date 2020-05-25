@@ -11,12 +11,10 @@ import java.util.concurrent.Executors;
 
 public class TaskRepository {
     private TaskDao taskDao;
-    private LiveData<List<TaskModel>> tasksListLiveData;
 
     public TaskRepository(Application application) {
         TaskDatabase taskDatabase = TaskDatabase.getInstance(application);
         taskDao = taskDatabase.taskDao();
-        tasksListLiveData = taskDao.getAllTasks();
     }
 
     ExecutorService executorService = Executors.newSingleThreadExecutor();
@@ -35,7 +33,7 @@ public class TaskRepository {
     }
 
     public LiveData<List<TaskModel>> getAllTasks() {
-        return tasksListLiveData;
+        return taskDao.getAllTasks();
     }
 
 

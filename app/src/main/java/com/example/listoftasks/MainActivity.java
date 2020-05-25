@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
@@ -19,21 +22,22 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        TasksRecyclerViewAdapter tasksRecyclerViewAdapter = new TasksRecyclerViewAdapter();
+        RecyclerView recyclerView = findViewById(R.id.main_activity_recycler_view);
+        recyclerView.setAdapter(tasksRecyclerViewAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new SwipeToDeleteCallback(this.getApplicationContext()));
+        itemTouchHelper.attachToRecyclerView(recyclerView);
+
         viewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
-        viewModel.getTasksListLiveData().observe(this, new Observer<List<TaskModel>>(){
+        viewModel.getTasksListLiveData().observe(this, new Observer<List<TaskModel>>() {
 
             @Override
             public void onChanged(List<TaskModel> taskModels) {
-                System.out.println(taskModels);
+                tasksRecyclerViewAdapter.submitList(taskModels);
             }
         });
 
-        //todo remove later
-        findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                viewModel.insertTask(new TaskModel("test"));
-            }
-        });
     }
 }

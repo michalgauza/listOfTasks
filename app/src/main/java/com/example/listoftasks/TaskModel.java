@@ -2,6 +2,7 @@ package com.example.listoftasks;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
 import java.util.Date;
 
@@ -10,12 +11,13 @@ public class TaskModel {
     @PrimaryKey
     private Long id;
     private String name;
-//    private TaskStatus status;
+    @TypeConverters(Converters.class)
+    private TaskStatus status;
 
     public TaskModel(String name) {
         this.id = new Date().getTime();
         this.name = name;
-//        this.status = TaskStatus.OPEN;
+        this.status = TaskStatus.OPEN;
     }
 
     public void setId(Long id) {
@@ -34,11 +36,11 @@ public class TaskModel {
         this.name = name;
     }
 
-//    public TaskStatus getStatus() {
-//        return status;
-//    }
-//
-//    public void setStatus(TaskStatus status) {
-//        this.status = status;
-//    }
+    public TaskStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(TaskStatus status) {
+        this.status = status;
+    }
 }
