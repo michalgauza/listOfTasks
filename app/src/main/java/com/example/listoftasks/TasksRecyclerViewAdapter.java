@@ -1,9 +1,11 @@
 package com.example.listoftasks;
 
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.AsyncListDiffer;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,23 +14,28 @@ import com.example.listoftasks.databinding.TaskCardViewBinding;
 
 import java.util.List;
 
-
 public class TasksRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    DiffUtil.ItemCallback<TaskModel> TASK_DIFF_UTIL = new DiffUtil.ItemCallback<TaskModel>() {
+    private DiffUtil.ItemCallback<TaskModel> TASK_DIFF_UTIL = new DiffUtil.ItemCallback<TaskModel>() {
 
         @Override
         public boolean areItemsTheSame(@NonNull TaskModel oldItem, @NonNull TaskModel newItem) {
-            return oldItem.getId().equals(newItem.getId());
+            return oldItem.getId() == newItem.getId();
         }
 
         @Override
         public boolean areContentsTheSame(@NonNull TaskModel oldItem, @NonNull TaskModel newItem) {
-            return false;
+            return oldItem.equals(newItem);
         }
     };
 
     private AsyncListDiffer<TaskModel> listDiffer = new AsyncListDiffer<>(this, TASK_DIFF_UTIL);
+
+    private MainActivity mainActivity;
+
+    public TasksRecyclerViewAdapter(MainActivity mainActivity) {
+        this.mainActivity = mainActivity;
+    }
 
     @NonNull
     @Override
@@ -68,6 +75,31 @@ public class TasksRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
 
         void bind(TaskModel taskModel) {
             biding.setTaskModel(taskModel);
+            biding.taskCardViewStatusButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mainActivity != null) {
+                        ((StatusButtonListener) mainActivity).buttonClicked(taskModel);
+                    }
+                }
+            });
+            switch (taskModel.getStatus()) {
+                case OPEN:
+                    biding.taskCardViewConstraintLayout.setBackgroundColor(
+                            ContextCompat.getColor(itemView.getContext(), R.color.openStatusColor));
+                    biding.taskCardViewStatusButton.setText(R.string.button_text_start_travel);
+                    break;
+                case WORKING:
+                    biding.taskCardViewConstraintLayout.setBackgroundColor(
+                            ContextCompat.getColor(itemView.getContext(), R.color.workingStatusColor));
+                    biding.taskCardViewStatusButton.setText(R.string.button_text_start_working);
+                    break;
+                case TRAVELING:
+                    biding.taskCardViewConstraintLayout.setBackgroundColor(
+                            ContextCompat.getColor(itemView.getContext(), R.color.travelingStatusColor));
+                    biding.taskCardViewStatusButton.setText(R.string.button_text_stop);
+                    break;
+            }
         }
     }
 }

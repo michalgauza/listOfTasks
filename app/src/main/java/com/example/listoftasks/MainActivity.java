@@ -1,23 +1,21 @@
 package com.example.listoftasks;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 
-import java.util.List;
-
-import kotlin.Lazy;
+import com.example.listoftasks.databinding.ActivityMainBinding;
 
 import static org.koin.java.KoinJavaComponent.get;
 
-public class MainActivity extends AppCompatActivity implements SwipeListener {
-
+public class MainActivity extends AppCompatActivity implements SwipeListener, StatusButtonListener {
 
     private MainActivityViewModel viewModel = get(MainActivityViewModel.class);
+    private ActivityMainBinding binding;
     private TasksRecyclerViewAdapter tasksRecyclerViewAdapter;
 
     @Override
@@ -25,7 +23,9 @@ public class MainActivity extends AppCompatActivity implements SwipeListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        tasksRecyclerViewAdapter = new TasksRecyclerViewAdapter();
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+
+        tasksRecyclerViewAdapter = new TasksRecyclerViewAdapter(this);
         RecyclerView recyclerView = findViewById(R.id.main_activity_recycler_view);
         recyclerView.setAdapter(tasksRecyclerViewAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
@@ -33,12 +33,11 @@ public class MainActivity extends AppCompatActivity implements SwipeListener {
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new SwipeToDeleteCallback(this));
         itemTouchHelper.attachToRecyclerView(recyclerView);
 
-        viewModel.getTasksListLiveData().observe(this, new Observer<List<TaskModel>>() {
+        binding.mainActivityFab.setOnClickListener(v -> addTask()
+        );
 
-            @Override
-            public void onChanged(List<TaskModel> taskModels) {
-                tasksRecyclerViewAdapter.submitList(taskModels);
-            }
+        viewModel.getTasksListLiveData().observe(this, taskModels -> {
+            tasksRecyclerViewAdapter.submitList(taskModels);
         });
 
     }
@@ -46,5 +45,28 @@ public class MainActivity extends AppCompatActivity implements SwipeListener {
     @Override
     public void itemSwiped(int adapterPosition) {
         viewModel.deleteTask(tasksRecyclerViewAdapter.getList().get(adapterPosition));
+    }
+
+
+    @Override
+    public void buttonClicked(TaskModel taskModel) {
+        TaskModel newTask = new TaskModel(taskModel.getName());
+        newTask.setId(taskModel.getId());
+        switch (taskModel.getStatus()) {
+            case OPEN:
+                newTask.setStatus(TaskStatus.TRAVELING);
+                break;
+            case TRAVELING:
+                newTask.setStatus(TaskStatus.WORKING);
+                break;
+            case WORKING:
+                newTask.setStatus(TaskStatus.OPEN);
+                break;
+        }
+        viewModel.updateTask(newTask);
+    }
+
+    public void addTask() {
+        viewModel.insertTask(new TaskModel(("new task")));
     }
 }

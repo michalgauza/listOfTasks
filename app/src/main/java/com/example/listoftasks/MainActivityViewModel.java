@@ -1,9 +1,5 @@
 package com.example.listoftasks;
 
-import android.app.Application;
-
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -25,6 +21,10 @@ public class MainActivityViewModel extends ViewModel {
 
     public void deleteTask(TaskModel taskModel){
         repo.delete(taskModel);
+    }
+
+    public void updateTask(TaskModel taskModel){
+        repo.update(taskModel);
     }
 
     public LiveData<List<TaskModel>> getTasksListLiveData() {

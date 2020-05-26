@@ -16,15 +16,14 @@ public class TaskRepository {
         this.taskDao = taskDao;
     }
 
-    ExecutorService executorService = Executors.newSingleThreadExecutor();
+    private ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     public void insert(TaskModel taskModel) {
-//        new InsertTaskAsyncTask(taskDao).execute(taskModel);
         executorService.submit(() -> taskDao.insert(taskModel));
     }
 
     public void update(TaskModel taskModel) {
-
+        executorService.submit(() -> taskDao.update(taskModel));
     }
 
     public void delete(TaskModel taskModel) {
@@ -33,20 +32,5 @@ public class TaskRepository {
 
     public LiveData<List<TaskModel>> getAllTasks() {
         return taskDao.getAllTasks();
-    }
-
-
-    private static class InsertTaskAsyncTask extends AsyncTask<TaskModel, Void, Void> {
-        private TaskDao taskDao;
-
-        private InsertTaskAsyncTask(TaskDao taskDao) {
-            this.taskDao = taskDao;
-        }
-
-        @Override
-        protected Void doInBackground(TaskModel... taskModels) {
-            taskDao.insert(taskModels[0]);
-            return null;
-        }
     }
 }

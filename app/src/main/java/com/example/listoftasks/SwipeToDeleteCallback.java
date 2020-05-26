@@ -2,7 +2,6 @@ package com.example.listoftasks;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.View;
@@ -20,8 +19,8 @@ public class SwipeToDeleteCallback extends ItemTouchHelper.SimpleCallback {
     public SwipeToDeleteCallback(Context context) {
         super(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
         this.context = context;
-        binIcon = context.getDrawable(R.drawable.ic_delete_black);
-        backgroundColor = new ColorDrawable(Color.RED);
+        binIcon = context.getDrawable(R.drawable.ic_delete);
+        backgroundColor = new ColorDrawable(context.getResources().getColor(R.color.darkRed, null));
     }
 
     @Override
@@ -42,7 +41,7 @@ public class SwipeToDeleteCallback extends ItemTouchHelper.SimpleCallback {
 
         View itemView = viewHolder.itemView;
         int backgroundCornerOffset = 20;
-        int iconMargin = (itemView.getHeight() - binIcon.getIntrinsicHeight()) / 2;
+        int iconMargin = (itemView.getHeight() - binIcon.getIntrinsicHeight()) / 4;
         int iconTop = itemView.getTop() + (itemView.getHeight() - binIcon.getIntrinsicHeight()) / 2;
         int iconBottom = iconTop + binIcon.getIntrinsicHeight();
 
