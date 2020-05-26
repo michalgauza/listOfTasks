@@ -9,48 +9,39 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 @Database(entities = TaskModel.class, version = 1)
 public abstract class TaskDatabase extends RoomDatabase {
 
-    private static TaskDatabase instance;
-
     public abstract TaskDao taskDao();
-
-    public static synchronized TaskDatabase getInstance(Context context) {
-        if (instance == null) {
-            instance = Room
-                    .databaseBuilder(context.getApplicationContext(),
-                            TaskDatabase.class,
-                            "task_database")
-                    .fallbackToDestructiveMigration()
-                    .addCallback(roomCallback)
-                    .build();
-        }
-        return instance;
-    }
-
-    private static RoomDatabase.Callback roomCallback = new RoomDatabase.Callback(){
-        @Override
-        public void onCreate(@NonNull SupportSQLiteDatabase db) {
-            super.onCreate(db);
-            new PopulateDatabaseAsyncTack(instance).execute();
-
-        }
-    };
-
-    private static class PopulateDatabaseAsyncTack extends AsyncTask<Void, Void, Void>{
-        private TaskDao taskDao;
-
-        private PopulateDatabaseAsyncTack(TaskDatabase taskDatabase) {
-            taskDao = taskDatabase.taskDao();
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            taskDao.insert(new TaskModel("task 1"));
-            taskDao.insert(new TaskModel("task 2"));
-            taskDao.insert(new TaskModel("task 3"));
-            return null;
-        }
-    }
-}
+//
+//    public static synchronized TaskDatabase getInstance(Context context) {
+//        if (instance == null) {
+//            instance = Room
+//                    .databaseBuilder(context.getApplicationContext(),
+//                            TaskDatabase.class,
+//                            "task_database")
+//                    .fallbackToDestructiveMigration()
+//                    .addCallback(roomCallback)
+//                    .build();
+//        }
+//        return instance;
+//    }
+//
+//    static RoomDatabase.Callback roomCallback = new RoomDatabase.Callback(){
+//    ExecutorService executorService = Executors.newSingleThreadExecutor();
+//    TaskDao taskDao;
+//
+//    @Override
+//        public void onCreate(@NonNull SupportSQLiteDatabase db) {
+//            super.onCreate(db);
+//
+//            executorService.submit(() -> taskDao.insert(new TaskModel("Task 1")));
+//            executorService.submit(() -> taskDao.insert(new TaskModel("Task 2")));
+//            executorService.submit(() -> taskDao.insert(new TaskModel("Task 3")));
+//            executorService.submit(() -> taskDao.insert(new TaskModel("Task 4")));
+//        }
+//    };
+ }

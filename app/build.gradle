@@ -1,9 +1,14 @@
 apply plugin: 'com.android.application'
 apply plugin: 'koin'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
+
+    packagingOptions {
+        exclude 'META-INF/kotlinx-coroutines-core.kotlin_module'
+    }
 
     dataBinding {
         enabled = true
@@ -67,4 +72,14 @@ dependencies {
 
     //gson
     implementation 'com.google.code.gson:gson:2.8.6'
+
+    // Koin
+    implementation "org.koin:koin-core-ext:2.1.5"
+
+    // Koin AndroidX Scope features
+    implementation "org.koin:koin-androidx-scope:2.1.5"
+    implementation "org.koin:koin-androidx-viewmodel:2.1.5"
+    implementation "org.koin:koin-androidx-ext:2.1.5"
+    implementation "org.koin:koin-ktor:2.1.5"
+
 }

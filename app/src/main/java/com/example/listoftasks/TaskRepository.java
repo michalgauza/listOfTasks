@@ -12,9 +12,8 @@ import java.util.concurrent.Executors;
 public class TaskRepository {
     private TaskDao taskDao;
 
-    public TaskRepository(Application application) {
-        TaskDatabase taskDatabase = TaskDatabase.getInstance(application);
-        taskDao = taskDatabase.taskDao();
+    public TaskRepository(TaskDao taskDao) {
+        this.taskDao = taskDao;
     }
 
     ExecutorService executorService = Executors.newSingleThreadExecutor();
@@ -29,7 +28,7 @@ public class TaskRepository {
     }
 
     public void delete(TaskModel taskModel) {
-
+        executorService.submit(() -> taskDao.delete(taskModel));
     }
 
     public LiveData<List<TaskModel>> getAllTasks() {

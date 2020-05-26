@@ -9,20 +9,22 @@ import androidx.lifecycle.ViewModel;
 
 import java.util.List;
 
-public class MainActivityViewModel extends AndroidViewModel {
+public class MainActivityViewModel extends ViewModel {
 
     private TaskRepository repo;
     private LiveData<List<TaskModel>> tasksListLiveData;
 
-    public MainActivityViewModel(@NonNull Application application) {
-        super(application);
-
-        repo = new TaskRepository(application);
+    public MainActivityViewModel(TaskRepository repo) {
+        this.repo = repo;
         tasksListLiveData = repo.getAllTasks();
     }
 
-    public void insertTask(TaskModel taskModel){
+    public void insertTask(TaskModel taskModel) {
         repo.insert(taskModel);
+    }
+
+    public void deleteTask(TaskModel taskModel){
+        repo.delete(taskModel);
     }
 
     public LiveData<List<TaskModel>> getTasksListLiveData() {

@@ -39,18 +39,22 @@ public class TasksRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof TaskViewHolder){
+        if (holder instanceof TaskViewHolder) {
             ((TaskViewHolder) holder).bind(listDiffer.getCurrentList().get(position));
         }
-    }
-
-    void submitList(List<TaskModel> newList){
-        listDiffer.submitList(newList);
     }
 
     @Override
     public int getItemCount() {
         return listDiffer.getCurrentList().size();
+    }
+
+    void submitList(List<TaskModel> newList) {
+        listDiffer.submitList(newList);
+    }
+
+    List<TaskModel> getList() {
+        return listDiffer.getCurrentList();
     }
 
     class TaskViewHolder extends RecyclerView.ViewHolder {
