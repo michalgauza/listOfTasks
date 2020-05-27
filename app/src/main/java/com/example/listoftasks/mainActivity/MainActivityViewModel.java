@@ -1,5 +1,6 @@
 package com.example.listoftasks.mainActivity;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -9,6 +10,8 @@ import com.example.listoftasks.db.TaskRepository;
 import java.util.List;
 
 public class MainActivityViewModel extends ViewModel {
+
+    AlertDialog addTaskDialog;
 
     private TaskRepository repo;
 
