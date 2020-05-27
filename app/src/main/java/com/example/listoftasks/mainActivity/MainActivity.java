@@ -114,17 +114,16 @@ public class MainActivity extends AppCompatActivity implements SwipeListener, Re
     }
 
     public void setupDialog() {
-
         EditText taskNameEditText = getEditText();
 
         LinearLayout layout = getLinearLayout(taskNameEditText);
 
         AlertDialog.Builder alertDialogBuilder = getDialogBuilder(taskNameEditText, layout);
 
-        viewModel.addTaskDialog = alertDialogBuilder.create();
-        viewModel.addTaskDialog.show();
+        AlertDialog addTaskDialog = alertDialogBuilder.create();
+        addTaskDialog.show();
 
-        showKeyboard(viewModel.addTaskDialog);
+        showKeyboard(addTaskDialog);
     }
 
     private void showKeyboard(AlertDialog addTaskDialog) {
