@@ -1,14 +1,13 @@
-package com.example.listoftasks
+package com.example.listoftasks.di
 
 import android.app.Application
 import android.content.Context
 import androidx.room.Room
-import androidx.room.RoomDatabase
-import androidx.sqlite.db.SupportSQLiteDatabase
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import com.example.listoftasks.mainActivity.MainActivityViewModel
+import com.example.listoftasks.db.TaskDao
+import com.example.listoftasks.db.TaskDatabase
+import com.example.listoftasks.db.TaskRepository
+import com.google.gson.Gson
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -24,7 +23,7 @@ val databaseModule = module {
         return Room.databaseBuilder(
                 application,
                 TaskDatabase::class.java,
-                "task_database"
+                TaskDatabase.DB_NAME
         ).fallbackToDestructiveMigration()
                 .addCallback(TaskDatabase.roomCallback)
                 .build()
@@ -39,9 +38,13 @@ val databaseModule = module {
     single { provideRepository(get()) }
 }
 
+val gsonModule = module {
+    single {Gson()}
+}
+
 fun startMyKoin(context: Context) {
     startKoin {
         androidContext(context)
-        modules(listOf(viewModelModules, databaseModule))
+        modules(listOf(viewModelModules, databaseModule, gsonModule))
     }
 }

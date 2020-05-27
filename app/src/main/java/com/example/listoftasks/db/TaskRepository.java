@@ -1,9 +1,8 @@
-package com.example.listoftasks;
-
-import android.app.Application;
-import android.os.AsyncTask;
+package com.example.listoftasks.db;
 
 import androidx.lifecycle.LiveData;
+
+import com.example.listoftasks.models.TaskModel;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;

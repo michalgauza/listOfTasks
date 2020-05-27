@@ -3,4 +3,8 @@
     <string name="button_text_start_travel">START TRAVEL</string>
     <string name="button_text_start_working">START WORKING</string>
     <string name="button_text_stop">STOP</string>
+    <string name="new_task_dialog_title">Add new task</string>
+    <string name="new_task_dialog_negative_button">Cancel</string>
+    <string name="new_task_dialog_positive_button">ADD</string>
+    <string name="add_task_error_message">Task name cannot be empty!</string>
 </resources>

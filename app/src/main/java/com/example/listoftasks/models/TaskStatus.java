@@ -1,4 +1,4 @@
-package com.example.listoftasks;
+package com.example.listoftasks.models;
 
 public enum TaskStatus {
     OPEN("OPEN"), TRAVELING("TRAVELING"), WORKING("WORKING");

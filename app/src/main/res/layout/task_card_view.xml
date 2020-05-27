@@ -7,7 +7,7 @@
 
         <variable
             name="taskModel"
-            type="com.example.listoftasks.TaskModel" />
+            type="com.example.listoftasks.models.TaskModel" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -24,14 +24,25 @@
 
             <TextView
                 android:id="@+id/task_card_view_status_label_text_view"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/zero_dp"
                 android:layout_height="wrap_content"
                 android:background="@color/colorPrimaryDark"
                 android:padding="8dp"
                 android:text="@{`Status: ` + taskModel.status.label}"
                 android:textColor="@android:color/white"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/task_card_view_id_text_view"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/task_card_view_id_text_view"
+                android:layout_width="@dimen/zero_dp"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimaryDark"
+                android:padding="8dp"
+                android:text="@{`ID: ` + String.valueOf(taskModel.id)}"
+                android:textColor="@android:color/white"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -42,6 +53,7 @@
                 android:textAlignment="center"
                 android:textColor="@android:color/white"
                 android:textSize="23sp"
+                android:layout_margin="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/task_card_view_status_label_text_view" />
@@ -54,6 +66,7 @@
                 android:text="@string/button_text_start_travel"
                 android:textColor="@android:color/white"
                 android:textSize="15sp"
+                android:layout_marginTop="16dp"
                 app:backgroundTint="@color/colorAccent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -1,23 +1,29 @@
-package com.example.listoftasks;
+package com.example.listoftasks.models;
 
 import androidx.annotation.Nullable;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
-import java.util.Date;
+import com.example.listoftasks.utils.Converters;
 
-@Entity(tableName = "task_table")
+@Entity(tableName = TaskModel.TABLE_NAME)
 public class TaskModel {
+    static final String TABLE_NAME = "task_table";
+
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String name;
     @TypeConverters(Converters.class)
     private TaskStatus status;
+    @Ignore
+    private Boolean canStatusChanged;
 
     public TaskModel(String name) {
         this.name = name;
         this.status = TaskStatus.OPEN;
+        canStatusChanged = true;
     }
 
     public void setId(int id) {
@@ -47,18 +53,27 @@ public class TaskModel {
     @Override
     public boolean equals(@Nullable Object obj) {
         if (obj instanceof TaskModel) {
-            if (((TaskModel) obj).status != this.status) {
+            TaskModel other = (TaskModel) obj;
+            if (other.id != this.id) {
                 return false;
             }
-            if (!((TaskModel) obj).name.equals(this.name)) {
+            if (other.status != this.status) {
                 return false;
             }
-            if (((TaskModel) obj).id != this.id) {
+            if (!other.name.equals(this.name)) {
                 return false;
             }
-            return true;
+            return other.canStatusChanged == this.canStatusChanged;
         } else {
             return false;
         }
+    }
+
+    public Boolean getCanStatusChanged() {
+        return canStatusChanged;
+    }
+
+    public void setCanStatusChanged(Boolean canStatusChanged) {
+        this.canStatusChanged = canStatusChanged;
     }
 }

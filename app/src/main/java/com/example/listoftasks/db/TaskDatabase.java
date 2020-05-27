@@ -1,36 +1,35 @@
-package com.example.listoftasks;
-
-import android.content.ContentValues;
-import android.content.Context;
-import android.os.AsyncTask;
-import android.util.Log;
+package com.example.listoftasks.db;
 
 import androidx.annotation.NonNull;
 import androidx.room.Database;
-import androidx.room.OnConflictStrategy;
-import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import com.google.gson.Gson;
+import com.example.listoftasks.models.TaskModel;
 
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import static org.koin.java.KoinJavaComponent.get;
 
-@Database(entities = TaskModel.class, version = 2)
+@Database(entities = TaskModel.class, version = TaskDatabase.DB_VERSION)
 public abstract class TaskDatabase extends RoomDatabase {
+
+    static final int DB_VERSION = 1;
+
+    public static String DB_NAME = "task_database";
 
     public abstract TaskDao taskDao();
 
-    static RoomDatabase.Callback roomCallback = new RoomDatabase.Callback() {
+    public static RoomDatabase.Callback roomCallback = new RoomDatabase.Callback() {
+        private int sampleTasksQuantity = 3;
+        private String sampleTaskName = "Sample task";
+
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             Executors.newSingleThreadExecutor().execute(() -> {
                 TaskDao taskDao = get(TaskDao.class);
-                for (int i = 0; i < 5; i++) {
-                    taskDao.insert(new TaskModel("Sample Task " + i));
+                for (int i = 0; i < sampleTasksQuantity; i++) {
+                    taskDao.insert(new TaskModel(sampleTaskName + i));
                 }
             });
         }
