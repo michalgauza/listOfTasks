@@ -157,9 +157,11 @@ public class MainActivity extends AppCompatActivity implements SwipeListener, Re
 
     @NotNull
     private LinearLayout getLinearLayout(EditText taskNameEditText) {
+        int verticalPadding = 40;
+        int horizontalPadding = 20;
         LinearLayout layout = new LinearLayout(this);
         layout.setOrientation(LinearLayout.VERTICAL);
-        layout.setPadding(40, 20, 40, 20);
+        layout.setPadding(verticalPadding, horizontalPadding, horizontalPadding, verticalPadding);
         layout.addView(taskNameEditText,
                 new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT));

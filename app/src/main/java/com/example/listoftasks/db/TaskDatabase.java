@@ -21,7 +21,7 @@ public abstract class TaskDatabase extends RoomDatabase {
     public abstract TaskDao taskDao();
 
     public static RoomDatabase.Callback roomCallback = new RoomDatabase.Callback() {
-        private int sampleTasksQuantity = 3;
+        private int sampleTasksQuantity = 20;
         private String sampleTaskName = "Sample task";
 
         @Override
