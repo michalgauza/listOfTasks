@@ -58,7 +58,14 @@ public class TasksRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
     }
 
     void submitList(List<TaskModel> newList) {
-        listDiffer.submitList(newList);
+        List<TaskModel> oldList = listDiffer.getCurrentList();
+        listDiffer.submitList(newList, () -> {
+            if (oldList.size() < listDiffer.getCurrentList().size()) {
+                if (mainActivity != null) {
+                    mainActivity.itemInserted();
+                }
+            }
+        });
     }
 
     List<TaskModel> getList() {

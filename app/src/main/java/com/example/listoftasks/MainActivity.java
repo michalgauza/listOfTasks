@@ -67,8 +67,13 @@ public class MainActivity extends AppCompatActivity implements SwipeListener, Re
         viewModel.updateTask(newTask);
     }
 
+    @Override
+    public void itemInserted() {
+        recyclerView.smoothScrollToPosition(0);
+    }
+
+
     public void addTask() {
         viewModel.insertTask(new TaskModel(("new task")));
-        recyclerView.smoothScrollToPosition(0);
     }
 }
