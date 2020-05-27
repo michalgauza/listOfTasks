@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.listoftasks.databinding.TaskCardViewBinding;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TasksRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -79,7 +80,7 @@ public class TasksRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
                 @Override
                 public void onClick(View v) {
                     if (mainActivity != null) {
-                        ((StatusButtonListener) mainActivity).buttonClicked(taskModel);
+                        ((RecyclerAdapterListener) mainActivity).buttonClicked(taskModel);
                     }
                 }
             });

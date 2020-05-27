@@ -1,5 +1,5 @@
 package com.example.listoftasks;
 
-interface StatusButtonListener {
+interface RecyclerAdapterListener {
     void buttonClicked(TaskModel taskModel);
 }

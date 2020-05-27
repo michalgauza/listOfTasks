@@ -24,11 +24,13 @@
 
             <TextView
                 android:id="@+id/task_card_view_status_label_text_view"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:background="@color/colorPrimaryDark"
                 android:padding="8dp"
-                android:text="@{`Status: ` + String.valueOf(taskModel.id)}"
+                android:text="@{`Status: ` + taskModel.status.label}"
                 android:textColor="@android:color/white"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -38,8 +40,8 @@
                 android:layout_height="wrap_content"
                 android:text="@{taskModel.name}"
                 android:textAlignment="center"
-                android:textSize="23sp"
                 android:textColor="@android:color/white"
+                android:textSize="23sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/task_card_view_status_label_text_view" />

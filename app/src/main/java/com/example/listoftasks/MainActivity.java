@@ -12,11 +12,12 @@ import com.example.listoftasks.databinding.ActivityMainBinding;
 
 import static org.koin.java.KoinJavaComponent.get;
 
-public class MainActivity extends AppCompatActivity implements SwipeListener, StatusButtonListener {
+public class MainActivity extends AppCompatActivity implements SwipeListener, RecyclerAdapterListener {
 
     private MainActivityViewModel viewModel = get(MainActivityViewModel.class);
     private ActivityMainBinding binding;
     private TasksRecyclerViewAdapter tasksRecyclerViewAdapter;
+    private  RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements SwipeListener, St
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
         tasksRecyclerViewAdapter = new TasksRecyclerViewAdapter(this);
-        RecyclerView recyclerView = findViewById(R.id.main_activity_recycler_view);
+        recyclerView = binding.mainActivityRecyclerView;
         recyclerView.setAdapter(tasksRecyclerViewAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
@@ -68,5 +69,6 @@ public class MainActivity extends AppCompatActivity implements SwipeListener, St
 
     public void addTask() {
         viewModel.insertTask(new TaskModel(("new task")));
+        recyclerView.smoothScrollToPosition(0);
     }
 }
