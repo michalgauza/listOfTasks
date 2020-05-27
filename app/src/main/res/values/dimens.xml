@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="zero_dp">0dp</dimen>
+    <dimen name="standard_margin">16dp</dimen>
+    <dimen name="standard_card_elevation">5dp</dimen>
+    <dimen name="quarter_margin">4dp</dimen>
+    <dimen name="half_padding">8dp</dimen>
+    <dimen name="task_name_text_size">23sp</dimen>
+    <dimen name="task_id_text_size">15sp</dimen>
 </resources>

@@ -7,4 +7,6 @@
     <string name="new_task_dialog_negative_button">Cancel</string>
     <string name="new_task_dialog_positive_button">ADD</string>
     <string name="add_task_error_message">Task name cannot be empty!</string>
+    <string name="task_card_status">Status:</string>
+    <string name="task_card_id">ID:</string>
 </resources>

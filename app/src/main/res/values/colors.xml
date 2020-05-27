@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#FF333334</color>
-    <color name="colorPrimaryDark">#FF1F2020</color>
-    <color name="colorAccent">#BF9A01</color>
+    <color name="colorPrimary">#FF212121</color>
+    <color name="colorPrimaryDark">#FF000000</color>
+    <color name="colorAccent">#FF00251A</color>
+    <color name="dialogBackground">#9e9e9e</color>
     <color name="darkRed">#FFCC2200</color>
-    <color name="openStatusColor">#001446</color>
-    <color name="travelingStatusColor">#FF001233</color>
-    <color name="workingStatusColor">#FF000B1F</color>
+    <color name="openStatusColor">#FF4F5B62</color>
+    <color name="travelingStatusColor">#FF2B3941</color>
+    <color name="workingStatusColor">#FF102027</color>
+
 
 </resources>
